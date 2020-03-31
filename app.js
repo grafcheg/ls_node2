@@ -22,22 +22,15 @@ server.listen(port, hostname, () => {
 const tickFn = () => {
   setTimeout(() => {
     const today = new Date();
-    const year = today.getUTCFullYear();
-    const month = today.getUTCMonth();
-    const day = today.getUTCDate();
-    const hours = today.getUTCHours();
-    const minutes = today.getUTCMinutes();
-    const seconds = today.getUTCSeconds();
-
-    // console.log(`Time: ${day}.${month}.${year} ${hours}:${minutes}:${seconds}`);
+    const UTCstring = today.toUTCString();
 
     connections = connections.filter(connection => {
       if (connection[1]-- > 0) {
-        connection[0].write(`Time: ${day}.${month}.${year} ${hours}:${minutes}:${seconds}\n`);
+        console.log(`Time: ${UTCstring}`);
 
         return true;
       } else {
-        connection[0].write(`Goodbye time: ${day}.${month}.${year} ${hours}:${minutes}:${seconds}\n`);
+        connection[0].write(`Goodbye time: ${UTCstring}\n`);
         connection[0].end();
 
         return false;
